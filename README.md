@@ -4,7 +4,13 @@ Buildscript is a make/build tool that uses Javascript modules as its scripting l
 Here is a simple example of how such a build script might look like:
 
 ```cs
-import { VSSolution, VSSolutionConfiguration, VSCppProject, VSCppProjectConfiguration, VSCppProjectFilter } from "vsgenerator.js"
+import {
+    VSSolution,
+    VSSolutionConfiguration,
+    VSCppProject,
+    VSCppProjectConfiguration,
+    VSCppProjectFilter
+} from "vsgenerator.js"
 
 var sourceFiles = [
     "buildscript.cpp",
@@ -35,15 +41,19 @@ var debugConfig = new VSCppProjectConfiguration("Debug", "x64");
 debugConfig.general.useDebugLibraries = "true";
 debugConfig.general.wholeProgramOptimization = "false";
 debugConfig.general.linkIncremental = "true";
-debugConfig.clCompile.preprocessorDefinitions = debugConfig.clCompile.preprocessorDefinitions.concat(defines);
+debugConfig.clCompile.preprocessorDefinitions =
+    debugConfig.clCompile.preprocessorDefinitions.concat(defines);
 debugConfig.clCompile.functionLevelLinking = "false";
 debugConfig.clCompile.intrinsicFunctions = "false";
 debugConfig.clCompile.runtimeLibrary = "MultiThreadedDebug";
-debugConfig.clCompile.additionalIncludeDirectories = debugConfig.clCompile.additionalIncludeDirectories.concat(includeDirs);
+debugConfig.clCompile.additionalIncludeDirectories =
+    debugConfig.clCompile.additionalIncludeDirectories.concat(includeDirs);
 
 var releaseConfig = new VSCppProjectConfiguration("Release", "x64");
-releaseConfig.clCompile.preprocessorDefinitions = releaseConfig.clCompile.preprocessorDefinitions.concat(defines);
-releaseConfig.clCompile.additionalIncludeDirectories = releaseConfig.clCompile.additionalIncludeDirectories.concat(includeDirs);
+releaseConfig.clCompile.preprocessorDefinitions =
+    releaseConfig.clCompile.preprocessorDefinitions.concat(defines);
+releaseConfig.clCompile.additionalIncludeDirectories =
+    releaseConfig.clCompile.additionalIncludeDirectories.concat(includeDirs);
 
 var project = new VSCppProject("buildscriptexample");
 project.configurations.push(debugConfig);
