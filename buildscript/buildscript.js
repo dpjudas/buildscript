@@ -15,19 +15,30 @@ var extraFiles = [
     "vsgenerator.js"
 ];
 
+var includeDirs = [
+    "$(SolutionDir)",
+    "$(SolutionDir)thirdparty\\duktape"
+];
+
+var defines = [
+    "WIN32",
+    "_DEBUG",
+    "_CONSOLE"
+];
+
 var debugConfig = new VSCppProjectConfiguration("Debug", "x64");
 debugConfig.general.useDebugLibraries = "true";
 debugConfig.general.wholeProgramOptimization = "false";
 debugConfig.general.linkIncremental = "true";
-debugConfig.clCompile.preprocessorDefinitions.push("WIN32", "_DEBUG", "_CONSOLE");
+debugConfig.clCompile.preprocessorDefinitions = debugConfig.clCompile.preprocessorDefinitions.concat(defines);
 debugConfig.clCompile.functionLevelLinking = "false";
 debugConfig.clCompile.intrinsicFunctions = "false";
 debugConfig.clCompile.runtimeLibrary = "MultiThreadedDebug";
-debugConfig.clCompile.additionalIncludeDirectories.push("$(SolutionDir)", "$(SolutionDir)thirdparty\\duktape");
+debugConfig.clCompile.additionalIncludeDirectories = debugConfig.clCompile.additionalIncludeDirectories.concat(includeDirs);
 
 var releaseConfig = new VSCppProjectConfiguration("Release", "x64");
-releaseConfig.clCompile.preprocessorDefinitions.push("WIN32", "_RELEASE", "_CONSOLE");
-releaseConfig.clCompile.additionalIncludeDirectories.push("$(SolutionDir)", "$(SolutionDir)thirdparty\\duktape");
+releaseConfig.clCompile.preprocessorDefinitions = releaseConfig.clCompile.preprocessorDefinitions.concat(defines);
+releaseConfig.clCompile.additionalIncludeDirectories = releaseConfig.clCompile.additionalIncludeDirectories.concat(includeDirs);
 
 var project = new VSCppProject("buildscript2");
 project.configurations.push(debugConfig);
