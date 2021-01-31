@@ -59,8 +59,8 @@ class VSCppProjectConfiguration {
             characterSet: "Unicode",
             wholeProgramOptimization: "true",
             linkIncremental: "false",
-            outDir: "$(SolutionDir)Build\\$(Configuration)\\$(Platform)\bin\\",
-            intDir: "$(SolutionDir)Build\\$(Configuration)\\$(Platform)\obj\\"
+            outDir: "$(SolutionDir)Build\\$(Configuration)\\$(Platform)\\bin\\",
+            intDir: "$(SolutionDir)Build\\$(Configuration)\\$(Platform)\\obj\\"
         };
         this.clCompile = {
             warningLevel: "Level3",
