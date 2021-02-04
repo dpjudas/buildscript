@@ -1,4 +1,5 @@
 
+import { File } from "file.js";
 export { VSSolution, VSSolutionConfiguration, VSCppProject, VSCppProjectConfiguration, VSCppProjectFilter };
 
 class LineWriter {
@@ -12,7 +13,7 @@ class LineWriter {
 
 	save(filename) {
         var text = this.lines.reduce((accumulator, value) => accumulator + value + "\r\n", "");
-        fileWriteAllText(filename, text);
+        File.writeAllText(filename, text);
 	}
 }
 
