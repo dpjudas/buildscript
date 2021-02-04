@@ -95,7 +95,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="buildscript.js" />
+    <None Include="file.js" />
+    <None Include="process.js" />
     <None Include="vsgenerator.js" />
+    <None Include="webexe.js" />
+    <None Include="zip.js" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="buildscript.h" />

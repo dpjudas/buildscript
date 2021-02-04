@@ -128,7 +128,14 @@ void BuildScript::createContext()
 	HandleScope handle_scope(isolate);
 
 	Local<ObjectTemplate> global = ObjectTemplate::New(isolate);
-	global->Set(isolate, "fileWriteAllText", FunctionTemplate::New(isolate, &BuildScript::fileWriteAllText));
+	global->Set(isolate, "__fileWriteAllText", FunctionTemplate::New(isolate, &BuildScript::fileWriteAllText));
+	global->Set(isolate, "__fileWriteAllBytes", FunctionTemplate::New(isolate, &BuildScript::fileWriteAllBytes));
+	global->Set(isolate, "__fileReadAllBytes", FunctionTemplate::New(isolate, &BuildScript::fileReadAllBytes));
+	global->Set(isolate, "__fileReadAllText", FunctionTemplate::New(isolate, &BuildScript::fileReadAllText));
+	global->Set(isolate, "__fileGetLastWriteTime", FunctionTemplate::New(isolate, &BuildScript::fileGetLastWriteTime));
+	global->Set(isolate, "__directoryFolders", FunctionTemplate::New(isolate, &BuildScript::directoryFolders));
+	global->Set(isolate, "__directoryFiles", FunctionTemplate::New(isolate, &BuildScript::directoryFiles));
+	global->Set(isolate, "__processRun", FunctionTemplate::New(isolate, &BuildScript::processRun));
 
 	Local<Context> context = Context::New(isolate, nullptr, global);
 	context->SetAlignedPointerInEmbedderData(1, this);
@@ -141,34 +148,132 @@ void BuildScript::fileWriteAllText(const v8::FunctionCallbackInfo<v8::Value>& ar
 
 	HandleScope handle_scope(args.GetIsolate());
 
-	if (args.Length() != 2)
-	{
-		args.GetIsolate()->ThrowException(String::NewFromUtf8Literal(args.GetIsolate(), "Bad parameters"));
-		return;
-	}
-
-	String::Utf8Value filename(args.GetIsolate(), args[0]);
-	if (*filename == nullptr)
-	{
-		args.GetIsolate()->ThrowException(String::NewFromUtf8Literal(args.GetIsolate(), "Bad parameters"));
-		return;
-	}
-
-	String::Utf8Value text(args.GetIsolate(), args[1]);
-	if (*text == nullptr)
-	{
-		args.GetIsolate()->ThrowException(String::NewFromUtf8Literal(args.GetIsolate(), "Bad parameters"));
-		return;
-	}
-
 	try
 	{
+		if (args.Length() != 2)
+			throw std::runtime_error("Bad parameters");
+
+		String::Utf8Value filename(args.GetIsolate(), args[0]);
+		if (*filename == nullptr)
+			throw std::runtime_error("Bad parameters");
+
+		String::Utf8Value text(args.GetIsolate(), args[1]);
+		if (*text == nullptr)
+			throw std::runtime_error("Bad parameters");
+
 		File::write_all_text(std::string(*filename, filename.length()), std::string(*text, text.length()));
 	}
 	catch (const std::exception& e)
 	{
 		args.GetIsolate()->ThrowException(String::NewFromUtf8(args.GetIsolate(), e.what()).ToLocalChecked());
-		return;
+	}
+}
+
+void BuildScript::fileWriteAllBytes(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	using namespace v8;
+	HandleScope handle_scope(args.GetIsolate());
+	try
+	{
+	}
+	catch (const std::exception& e)
+	{
+		args.GetIsolate()->ThrowException(String::NewFromUtf8(args.GetIsolate(), e.what()).ToLocalChecked());
+	}
+}
+
+void BuildScript::fileReadAllBytes(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	using namespace v8;
+	HandleScope handle_scope(args.GetIsolate());
+	try
+	{
+	}
+	catch (const std::exception& e)
+	{
+		args.GetIsolate()->ThrowException(String::NewFromUtf8(args.GetIsolate(), e.what()).ToLocalChecked());
+	}
+}
+
+void BuildScript::fileReadAllText(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	using namespace v8;
+	HandleScope handle_scope(args.GetIsolate());
+	try
+	{
+	}
+	catch (const std::exception& e)
+	{
+		args.GetIsolate()->ThrowException(String::NewFromUtf8(args.GetIsolate(), e.what()).ToLocalChecked());
+	}
+}
+
+void BuildScript::fileGetLastWriteTime(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	using namespace v8;
+	HandleScope handle_scope(args.GetIsolate());
+	try
+	{
+		if (args.Length() != 1)
+			throw std::runtime_error("Bad parameters");
+
+		String::Utf8Value filename(args.GetIsolate(), args[0]);
+		if (*filename == nullptr)
+			throw std::runtime_error("Bad parameters");
+
+		args.GetReturnValue().Set((double)File::get_last_write_time(std::string(*filename, filename.length())));
+	}
+	catch (const std::exception& e)
+	{
+		args.GetIsolate()->ThrowException(String::NewFromUtf8(args.GetIsolate(), e.what()).ToLocalChecked());
+	}
+}
+
+void BuildScript::directoryFolders(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	using namespace v8;
+	HandleScope handle_scope(args.GetIsolate());
+	try
+	{
+	}
+	catch (const std::exception& e)
+	{
+		args.GetIsolate()->ThrowException(String::NewFromUtf8(args.GetIsolate(), e.what()).ToLocalChecked());
+	}
+}
+
+void BuildScript::directoryFiles(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	using namespace v8;
+	HandleScope handle_scope(args.GetIsolate());
+	try
+	{
+	}
+	catch (const std::exception& e)
+	{
+		args.GetIsolate()->ThrowException(String::NewFromUtf8(args.GetIsolate(), e.what()).ToLocalChecked());
+	}
+}
+
+void BuildScript::processRun(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	using namespace v8;
+	HandleScope handle_scope(args.GetIsolate());
+	try
+	{
+		if (args.Length() != 1)
+			throw std::runtime_error("Bad parameters");
+
+		String::Utf8Value filename(args.GetIsolate(), args[0]);
+		if (*filename == nullptr)
+			throw std::runtime_error("Bad parameters");
+
+		int retcode = std::system(std::string(*filename, filename.length()).c_str());
+		args.GetReturnValue().Set(retcode);
+	}
+	catch (const std::exception& e)
+	{
+		args.GetIsolate()->ThrowException(String::NewFromUtf8(args.GetIsolate(), e.what()).ToLocalChecked());
 	}
 }
 

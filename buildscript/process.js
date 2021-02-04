@@ -4,6 +4,6 @@ export { Process };
 class Process
 {
     static run(cmdline) {
-        return 0;
+        return __processRun(cmdline);
     }
 }

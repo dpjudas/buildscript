@@ -7,8 +7,24 @@
     <ClCompile Include="utf8_reader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="vsgenerator.js" />
-    <None Include="buildscript.js" />
+    <None Include="buildscript.js">
+      <Filter>Modules</Filter>
+    </None>
+    <None Include="file.js">
+      <Filter>Modules</Filter>
+    </None>
+    <None Include="process.js">
+      <Filter>Modules</Filter>
+    </None>
+    <None Include="vsgenerator.js">
+      <Filter>Modules</Filter>
+    </None>
+    <None Include="webexe.js">
+      <Filter>Modules</Filter>
+    </None>
+    <None Include="zip.js">
+      <Filter>Modules</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="file.h" />
@@ -16,5 +32,10 @@
     <ClInclude Include="utf8_reader.h" />
     <ClInclude Include="buildscript.h" />
     <ClInclude Include="javascript.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Modules">
+      <UniqueIdentifier>{2f25d076-5841-47b3-aec3-00f487c6eb2e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
